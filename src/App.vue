@@ -1,147 +1,130 @@
 <template>
-  <div class="min-h-screen bg-dark-gradient text-white p-4 pb-12 select-none">
-    <header class="flex justify-between items-center mb-6 pt-2">
+  <div class="min-h-screen bg-neutral-950 text-white p-4 max-w-md mx-auto flex flex-col justify-between select-none">
+    <!-- Header -->
+    <div class="flex items-center justify-between py-2">
       <div class="flex items-center space-x-2">
-        <div class="w-8 h-8 rounded-full bg-gold-gradient p-[1px] shadow-gold-glow">
-          <div class="w-full h-full bg-black rounded-full flex items-center justify-center font-bold text-xs text-gold-accent">
-            GP
-          </div>
+        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-yellow-600 via-yellow-400 to-yellow-200 flex items-center justify-center font-bold text-black text-xs shadow-lg shadow-yellow-500/20">
+          GP
         </div>
-        <span class="font-bold text-lg tracking-wider text-transparent bg-clip-text bg-gold-gradient">
-          GPCA PRIVATE
-        </span>
+        <span class="font-bold tracking-wider text-sm bg-gradient-to-r from-yellow-200 to-yellow-500 bg-clip-text text-transparent">GPCA Card</span>
       </div>
-      <div class="text-xs px-3 py-1 rounded-full border border-gold-500/30 bg-black/40 text-gold-accent backdrop-blur-md">
+      <span class="text-xs px-2.5 py-1 rounded-full bg-yellow-500/10 text-yellow-400 border border-yellow-500/30 font-medium">
         VIP 尊榮會員
+      </span>
+    </div>
+
+    <!-- Black Card UI -->
+    <div class="relative w-full aspect-[1.586/1] my-4 rounded-2xl p-6 overflow-hidden border border-yellow-500/40 shadow-2xl bg-gradient-to-br from-neutral-900 via-neutral-950 to-black flex flex-col justify-between">
+      <!-- Background Ambient Glow -->
+      <div class="absolute -top-12 -right-12 w-40 h-40 bg-yellow-500/10 rounded-full blur-2xl pointer-events-none"></div>
+      <div class="absolute -bottom-12 -left-12 w-40 h-40 bg-yellow-600/10 rounded-full blur-2xl pointer-events-none"></div>
+
+      <!-- Top Row -->
+      <div class="flex justify-between items-start z-10">
+        <div>
+          <p class="text-[10px] tracking-widest text-neutral-400 uppercase">GPCA BLACK CARD</p>
+          <p class="text-xs font-semibold text-yellow-400/90 tracking-wider">PREMIUM ISSUING</p>
+        </div>
+        <div class="w-9 h-7 rounded bg-gradient-to-r from-yellow-300 via-yellow-500 to-yellow-600 opacity-80 flex items-center justify-center shadow">
+          <div class="w-7 h-5 border border-black/30 rounded-sm"></div>
+        </div>
       </div>
-    </header>
 
-    <div class="relative w-full aspect-[1.586/1] rounded-2xl p-6 bg-dark-card border border-gold-500/40 shadow-card-luxury overflow-hidden mb-6 group transition-all duration-500">
-      <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-gold-500/10 rounded-full blur-3xl group-hover:bg-gold-500/20 transition-all"></div>
-      
-      <div class="relative z-10 flex flex-col justify-between h-full">
-        <div class="flex justify-between items-start">
-          <div>
-            <p class="text-[10px] tracking-widest text-gray-400 uppercase">GPCA BLACK CARD</p>
-            <p class="text-xs font-semibold text-gold-accent tracking-widest">PREMIUM ISSUING</p>
-          </div>
-          <div class="w-10 h-7 bg-gold-gradient rounded-md opacity-80 shadow-sm"></div>
+      <!-- Card Number -->
+      <div class="z-10 my-auto">
+        <p class="text-xs text-neutral-400 mb-1">Card Number</p>
+        <p class="text-lg tracking-widest font-mono font-bold bg-gradient-to-r from-yellow-100 via-yellow-300 to-yellow-500 bg-clip-text text-transparent">
+          •••• •••• •••• 8888
+        </p>
+      </div>
+
+      <!-- Bottom Row -->
+      <div class="flex justify-between items-end z-10">
+        <div>
+          <p class="text-[9px] text-neutral-400 uppercase tracking-wider">Card Holder</p>
+          <p class="text-xs font-bold tracking-wider text-neutral-200">VALUED CUSTOMER</p>
         </div>
-
-        <div class="my-auto py-2">
-          <p class="text-xs text-gray-400 mb-1">Card Number</p>
-          <p class="font-mono text-lg md:text-xl tracking-widest text-gold-300 font-bold drop-shadow">
-            {{ activeCard ? activeCard.cardNumber : '•••• •••• •••• 8888' }}
-          </p>
-        </div>
-
-        <div class="flex justify-between items-end text-xs">
-          <div>
-            <p class="text-[9px] text-gray-400 uppercase">Card Holder</p>
-            <p class="font-medium tracking-wide text-gray-200">{{ tgUser ? tgUser.first_name : 'VALUED CUSTOMER' }}</p>
-          </div>
-          <div>
-            <p class="text-[9px] text-gray-400 uppercase">Expires</p>
-            <p class="font-mono text-gray-200">{{ activeCard ? activeCard.exp : '12/29' }}</p>
-          </div>
+        <div>
+          <p class="text-[9px] text-neutral-400 uppercase tracking-wider text-right">Expires</p>
+          <p class="text-xs font-mono font-semibold text-yellow-400">12/29</p>
         </div>
       </div>
     </div>
 
-    <div class="bg-black/60 border border-gold-500/20 rounded-2xl p-5 backdrop-blur-xl mb-6 shadow-lg">
-      <h3 class="text-sm font-semibold text-gold-accent mb-3 flex items-center">
-        <span class="w-1.5 h-1.5 rounded-full bg-gold-400 mr-2 shadow-gold-glow"></span>
-        開卡預存額度 (最低 50 USDT)
-      </h3>
-      
-      <div class="relative mb-4">
-        <input 
-          v-model.number="depositAmount" 
-          type="number" 
-          min="50"
-          class="w-full bg-dark-900/90 border border-gold-500/30 rounded-xl px-4 py-3 text-gold-300 font-mono text-lg focus:outline-none focus:border-gold-400 focus:ring-1 focus:ring-gold-400 transition-all"
-          placeholder="50"
-        />
-        <span class="absolute right-4 top-1/2 -translate-y-1/2 text-xs font-bold text-gold-accent">USDT</span>
+    <!-- Deposit Options -->
+    <div class="space-y-4">
+      <div class="bg-neutral-900/80 border border-neutral-800 rounded-xl p-4">
+        <label class="block text-xs text-neutral-400 mb-2 font-medium">
+          開卡預存額度 (最低 50 USDT)
+        </label>
+        <div class="relative flex items-center">
+          <input 
+            v-model.number="amount"
+            type="number" 
+            min="50" 
+            class="w-full bg-neutral-950 border border-neutral-700 focus:border-yellow-500 text-white rounded-lg px-3 py-2.5 text-base font-bold outline-none transition-all"
+            placeholder="50"
+          />
+          <span class="absolute right-3 text-xs font-bold text-yellow-500">USDT</span>
+        </div>
+
+        <!-- Quick Select Buttons -->
+        <div class="grid grid-cols-4 gap-2 mt-3">
+          <button 
+            v-for="opt in [50, 100, 300, 500]" 
+            :key="opt"
+            @click="amount = opt"
+            :class="[
+              'py-1.5 rounded-lg text-xs font-semibold transition-all border',
+              amount === opt 
+                ? 'bg-yellow-500/20 text-yellow-400 border-yellow-500' 
+                : 'bg-neutral-950 text-neutral-400 border-neutral-800 hover:border-neutral-700'
+            ]"
+          >
+            ${{ opt }}
+          </button>
+        </div>
       </div>
 
+      <!-- Action Button -->
       <button 
-        @click="handleIssueCard" 
-        :disabled="loading"
-        class="w-full py-3.5 rounded-xl font-bold text-black bg-gold-gradient shadow-gold-glow active:scale-[0.98] transition-transform duration-150 disabled:opacity-50"
+        @click="handleApply"
+        :disabled="loading || amount < 50"
+        class="w-full py-3.5 rounded-xl bg-gradient-to-r from-yellow-500 via-yellow-400 to-yellow-600 text-black font-extrabold text-sm tracking-wider shadow-lg shadow-yellow-500/20 hover:brightness-110 active:scale-[0.99] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
       >
-        <span v-if="!loading">立即尊榮開卡</span>
-        <span v-else class="flex items-center justify-center">
-          <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-black" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-          通訊中...
-        </span>
+        <span v-if="loading" class="inline-block animate-spin rounded-full h-4 w-4 border-2 border-black border-t-transparent"></span>
+        <span>{{ loading ? '開卡處理中...' : '立即尊榮開卡' }}</span>
       </button>
-    </div>
 
-    <div class="text-center">
-      <a 
-        :href="'https://t.me/' + agentContact.replace('@','')" 
-        target="_blank" 
-        class="inline-flex items-center text-xs text-gold-500/80 hover:text-gold-300 transition-colors"
-      >
-        <span>聯繫專屬 1-on-1 代理客戶經理 ({{ agentContact }})</span>
-        <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-      </a>
+      <!-- Customer Support Footer -->
+      <div class="text-center pt-2">
+        <p class="text-[11px] text-neutral-500">
+          尊榮專屬 1-on-1 代辦管家服務 
+          <a href="https://t.me/gbcbreakingnews777" target="_blank" class="text-yellow-500 hover:underline font-medium">@gbcbreakingnews777</a>
+        </p>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import axios from 'axios'
+import { ref } from 'vue'
 
-const BACKEND_URL = 'https://my-backend-45cq.onrender.com'
-
-const depositAmount = ref(50)
+const amount = ref(50)
 const loading = ref(false)
-const activeCard = ref(null)
-const agentContact = ref('@gbcbreakingnews777')
-const tgUser = ref(null)
 
-onMounted(async () => {
-  if (window.Telegram?.WebApp) {
-    const webapp = window.Telegram.WebApp
-    webapp.ready()
-    webapp.expand()
-    tgUser.value = webapp.initDataUnsafe?.user || null
-  }
-
-  try {
-    const res = await axios.get(`${BACKEND_URL}/api/config`)
-    if (res.data?.data?.agentContact) {
-      agentContact.value = res.data.data.agentContact
-    }
-  } catch (err) {
-    console.error("無法連線至 Render 後端:", err)
-  }
-})
-
-const handleIssueCard = async () => {
-  if (depositAmount.value < 50) {
-    alert('預存開卡金額低於門檻 50 USDT')
-    return
-  }
-
+const handleApply = () => {
+  if (amount.value < 50) return
   loading.value = true
-  try {
-    const res = await axios.post(`${BACKEND_URL}/api/cards/issue`, {
-      tgUserId: tgUser.value?.id || 'guest_user',
-      depositAmount: depositAmount.value
-    })
-
-    if (res.data?.success) {
-      activeCard.value = res.data.cardDetails
-      alert('🎉 開卡成功！已為您生成 GPCA 專屬黑金卡')
-    }
-  } catch (err) {
-    alert(err.response?.data?.message || '開卡服務繁忙，請稍後再試')
-  } finally {
+  
+  // 模擬開卡請求處理
+  setTimeout(() => {
     loading.value = false
-  }
+    if (window.Telegram?.WebApp) {
+      window.Telegram.WebApp.showAlert(`尊榮開卡申請已提交！\n開卡預存金額：${amount.value} USDT\n客服將盡速為您處理。`)
+    } else {
+      alert(`尊榮開卡申請已提交！\n開卡預存金額：${amount.value} USDT`)
+    }
+  }, 1200)
 }
 </script>
